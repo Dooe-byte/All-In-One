@@ -1,0 +1,125 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url(../data.png);
+  background-size: cover;
+  font-family: 'Righteous', cursive;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.shadow {
+  position: relative;
+  margin: 20px;
+  width: 100%;
+  max-width: 400px;
+  background-image: transparent;
+  color: white;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+.shadow:before, .shadow:after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background: linear-gradient(45deg, blue, green, gold, orange, red, aqua, cornsilk, firebrick, khaki, lavenderblush);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  background-size: 400%;
+  z-index: -1;
+  animation: animate 20s linear infinite;
+}
+
+.shadow:after {
+  filter: blur(20px);
+}
+
+@keyframes animate {
+  0% { background-position: 0 0; }
+  50% { background-position: 300% 0; }
+  100% { background-position: 0 0; }
+}
+
+.login {
+  text-align: center;
+  padding-top: 20px;
+}
+
+input[type=text] {
+  border: 2px solid grey;
+  border-radius: 10px;
+  text-align: center;
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+input[type=text]:focus {
+  border: 3px solid Aqua;
+  outline: none;
+}
+
+button {
+  background: black;
+  color: white;
+  font-family: 'Righteous', cursive;
+  border: none;
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  border: 2px solid LightSkyBlue;
+}
+
+#result {
+  margin-top: 20px;
+  padding: 10px;
+  color: #fff;
+  border-radius: 10px;
+  display: none;
+  background-color: transparent;
+}
+
+@media (max-width: 768px) {
+  .shadow {
+    margin: 10px;
+    padding: 20px;
+  }
+
+  .login {
+    padding-top: 10px;
+  }
+
+  input[type=text], button {
+    padding: 12px;
+  }
+
+  button {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .shadow {
+    width: 90%;
+    max-width: 100%;
+  }
+
+  input[type=text], button {
+    padding: 15px;
+  }
+
+  button {
+    font-size: 14px;
+  }
+}
