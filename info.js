@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
       'last-name': 'Last Name',
       'submit': 'Submit',
       'toggle-lang': 'Switch to Haitian Creole',
-      'error-message': 'Error: Please enter your first and last name',
+      'error-message': 'Error: Please enter both your first and last name',
       'report-header': 'Dooe-Byte Report for',
     },
     'ht': {
@@ -28,23 +28,29 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+
   function translatePage(lang) {
     const elementsToTranslate = document.querySelectorAll('[data-translate]');
 
     elementsToTranslate.forEach(element => {
       const key = element.getAttribute('data-translate');
-      if (translations[lang][key]) {
+      if (translations[lang] && translations[lang][key]) {
         element.innerText = translations[lang][key];
       }
     });
+
     currentLang = lang;
     langToggle.innerText = translations[lang]['toggle-lang'];
   }
 
-  submitBtn.addEventListener("click", () => {
+  
+  submitBtn.addEventListener("click", (event) => {
+    event.preventDefault();  
+
     const firstName = fnameInput.value.trim();
     const lastName = lnameInput.value.trim();
 
+    
     if (!firstName || !lastName) {
       resultDiv.textContent = translations[currentLang]['error-message'];
       resultDiv.style.color = "red";
@@ -52,6 +58,10 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    
+    resultDiv.innerHTML = '';
+
+    
     let resultText = `<h3>${translations[currentLang]['report-header']} ${firstName} ${lastName}</h3>`;
     resultText += `<hr>`;
     resultText += `<ul>`;
@@ -66,12 +76,13 @@ document.addEventListener("DOMContentLoaded", () => {
       `https://www.peekyou.com/${firstName}_${lastName}`,
       `https://www.addresses.com/people/${firstName}+${lastName}`,
       `https://www.spokeo.com/${firstName}-${lastName}`,
-      `https://www.truepeoplesearch.com/results?name=${firstName}%20${lastName}`
-      `https://www.linkedin.com/pub/dir/?first=${firstName}&last=${lastName}&search=Search`,
+      `https://www.truepeoplesearch.com/results?name=${firstName}%20${lastName}`,
+      `https://www.linkedin.com/pub/dir/?first=${firstName}&last=${lastName}&search=Search`, // Missing comma fixed here
     ];
 
+    
     urls.forEach(url => {
-      resultText += `<li><a href="${url}" target="_blank">${url}</a></li>`;
+      resultText += `<li><a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a></li>`;
     });
     resultText += `</ul>`;
 
@@ -80,6 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
     resultDiv.style.color = "black";
   });
 
+  
   langToggle.addEventListener('click', () => {
     if (currentLang === 'ht') {
       translatePage('en');
@@ -87,5 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
       translatePage('ht');
     }
   });
+
+
   translatePage(currentLang);
 });
